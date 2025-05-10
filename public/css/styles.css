@@ -4,3 +4,73 @@
 *:after {
   box-sizing: border-box;
 }
+
+:root {
+  --primary-color: #30b3cf;
+  --secondary-color: #242332;
+
+  --heading-font: "Funnel Display", sans-serif;
+  --paragraph-font: "Montserrat", sans-serif;
+}
+
+/* body {
+  background-image: url('/images/site/checkerboard.jpg');
+} */
+* {
+  margin: 0;
+}
+header {
+  background-color: white;
+}
+.siteName {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  font-size: 30px;
+  font-family: var(--heading-font);
+}
+.siteName a, #tools a {
+  text-decoration: none;
+  color: black;
+}
+#tools {
+  position: absolute;
+  top: -3px;
+  right: 1rem;
+  padding: 1rem;
+  font-family: var(--paragraph-font);
+}
+nav {
+  background-color: var(--secondary-color);
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-family: var(--paragraph-font);
+}
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  list-style: none;
+  text-align: left;
+  padding: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+nav a {
+  text-decoration: none;
+  color: white;
+  padding: 1rem;
+  font-size: 18px;
+}
+#hero img {
+  width: 100%;
+  height: 100%;
+}
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.floating-text {
+  background-color: white;
+}
