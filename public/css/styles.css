@@ -13,9 +13,6 @@
   --paragraph-font: "Montserrat", sans-serif;
 }
 
-/* body {
-  background-image: url('/images/site/checkerboard.jpg');
-} */
 * {
   margin: 0;
 }
@@ -36,7 +33,7 @@ header {
 #tools {
   position: absolute;
   top: -3px;
-  right: 1rem;
+  right: .5rem;
   padding: 1rem;
   font-family: var(--paragraph-font);
 }
@@ -67,10 +64,122 @@ nav a {
   width: 100%;
   height: 100%;
 }
+#hero {
+  position: relative;
+  padding-bottom: 20px;
+}
 main {
   max-width: 1000px;
   margin: 0 auto;
+  background-color: white;
 }
 .floating-text {
+  background-color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  top: 5em;
+  color: var(--primary-color);
+  padding: 5px;
+}
+h1, h2, h3 {
+  font-family: var(--heading-font);
+}
+h1 {
+  font-size: 35px;
+}
+.floating-text ul {
+  list-style: none;
+  padding: 0;
+}
+.floating-text li, .card li {
+  padding: 3px;
+  font-size: 18px;
+  font-family: var(--paragraph-font);
+}
+#button {
+  background-color: var(--primary-color);
+  color: black;
+  font-family: var(--paragraph-font);
+  font-size: 20px;
+  padding: 10px;
+  border: 1px outset buttonborder;
+  border-radius: 3px;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+.main-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 2fr));
+  justify-content: center;
+  margin: 0 auto;
+  gap: 3rem;
+  padding: 10px;
+}
+.card {
+  max-width: 400px;
+}
+.card ul {
+  padding-left: 20px;
+}
+.card h3 {
+  font-size: 25px;
+}
+.upgrade-links {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2rem;
+}
+.upgrade-fig {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: var(--primary-color);
+}
+figure {
+  position: relative;
+}
+figcaption {
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  right: 0;
   background-color: white;
+}
+footer {
+  padding-top: 15px;
+  padding-left: 5px;
+  font-family: var(--paragraph-font);
+}
+
+nav li:hover {
+  background-color: var(--primary-color);
+}
+nav li a:hover {
+  color: black;
+}
+#tools a:hover {
+  color: #136172;
+}
+#button:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+@media screen and (min-width: 600px) {
+  #outer {
+    background-image: url('/images/site/checkerboard.jpg');
+  }
+  #wrapper {
+    padding: 10px;
+    border: solid 5px var(--primary-color);
+    border-radius: 3px;
+    margin: 40px;
+    background-color: white;
+  }
+  #tools {
+    position: absolute;
+    top: 35px;
+    right: 3rem;
+  }
 }
