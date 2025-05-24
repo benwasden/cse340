@@ -89,7 +89,7 @@ h1, h2, h3 {
 h1 {
   font-size: 35px;
 }
-.floating-text ul, #inv-display li {
+.floating-text ul, #inv-display li, #inv-display ul, .vehicle-description ul {
   list-style: none;
   padding: 0;
 }
@@ -172,9 +172,55 @@ nav li a:hover {
 
 
 #inv-display {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+  padding: 0;
+  display: flex;
+  margin: 0 auto;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
+#inv-display li {
+  margin: 10px;
+  text-decoration: none;
+  text-align: center;
+  border: solid 1px black;
+  border-radius: 3px;
+  position: relative;
+  height: 325px;
+  max-width: 350px;
+  width: 100%;
+}
+#inv-display img {
+  width: 100%;
+  max-width: 350px;
+}
+.namePrice {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: solid 5px black;
+}
+
+.vehicle-info {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.vehicle-image img {
+  width: 100%;
+}
+.vehicle-description li {
+  padding: 8px;
+  font-size: 20px;
+  font-family: var(--paragraph-font);
+}
+.vehicle-description ul {
+  padding-top: 10px;
+}
+
 
 @media screen and (min-width: 600px) {
   #outer {
@@ -194,5 +240,10 @@ nav li a:hover {
   }
   nav a {
     font-size: 18px;
+  }
+  .vehicle-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
   }
 }
