@@ -1,0 +1,12 @@
+<h1><%- title %></h1>
+<%- messages() %>
+<form id="login-form" action="/account/login" method="post">
+    <div id="inner-form">
+        <label>Email<input type="email" name="account_email" required></label>
+        <label>Password<input type="password" name="account_password" required></label>
+        <div class="form-button">
+            <input type="submit" Value="LOGIN">
+        </div>
+        <p>No account? <span><a href="/account/registration">Sign-up</a></span></p>
+    </div>
+</form>
