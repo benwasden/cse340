@@ -268,8 +268,11 @@ input[type=submit]:hover {
   font-size: 18px;
   padding-top: 10px;
 }
-#login-form a {
+#login-form a, #login-info {
   color: white;
+}
+#login-info {
+  font-size: 11px;
 }
 #outer-reg-form {
   border: solid 3px black;
@@ -290,6 +293,10 @@ input[type=submit]:hover {
 }
 .reg-form-button input[type=submit]:hover {
   background-color: rgb(4, 73, 129);
+}
+#pwd-info {
+  font-size: 11px;
+  color: darkslategray;
 }
 
 @media screen and (min-width: 600px) {

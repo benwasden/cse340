@@ -6,7 +6,7 @@
             <label>First Name<input type="text" name="account_firstname" required></label>
             <label>Last Name<input type="text" name="account_lastname" required></label>
             <label>Email<input type="email" name="account_email" required></label>
-            <label>Password<input type="password" name="account_password" id="pword" required></label>
+            <label>Password<span id="pwd-info"><br />Must be at least 12 characters and contain at least one number, 1 capital letter, and 1 special character</span><input type="password" name="account_password" id="pword" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>
             <span id="pswdBtn">Show Password</span>
             <div class="reg-form-button">
                 <input type="submit" Value="REGISTER">
