@@ -55,7 +55,7 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Account route
-app.use("/account", accountRoute)
+app.use("/account", require("./routes/accountRoute"))
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
