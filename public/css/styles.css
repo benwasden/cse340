@@ -221,7 +221,7 @@ nav li a:hover {
   padding-top: 10px;
 }
 
-#login-form, #outer-reg-form {
+#loginForm, #outer-reg-form {
   background-color: #99abc5;
   margin: 0 auto;
   width: 100%;
@@ -263,12 +263,12 @@ input[type=submit]:hover {
   background-color: var(--secondary-color);
   color: white;
 }
-#login-form p {
+#loginForm p {
   text-align: center;
   font-size: 18px;
   padding-top: 10px;
 }
-#login-form a, #login-info {
+#loginForm a, #login-info {
   color: white;
 }
 #login-info {

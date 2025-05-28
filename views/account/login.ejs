@@ -7,7 +7,7 @@
             <% }) %>
         </ul>
     <% } %>   
-<form id="login-form" action="/account/login" method="post">
+<form id="loginForm" action="/account/login" method="post">
     <div id="inner-form">
         <label>Email<input type="email" name="account_email" required></label>
         <label>Password<span id="login-info"><br />Must be at least 12 characters and contain at least one number, 1 capital letter, and 1 special character</span><input type="password" name="account_password" id="pword" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>
