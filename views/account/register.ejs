@@ -1,6 +1,13 @@
 <div id="outer-reg-form">
     <h1><%- title %></h1>
     <%- messages() %>
+    <% if (errors) { %>
+        <ul class="notice">
+            <% errors.array().forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>    
     <form id="register-form" action="/account/register" method="post">
         <div id="inner-reg-form">
             <label>First Name<input type="text" name="account_firstname" required></label>

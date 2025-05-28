@@ -1,5 +1,12 @@
 <h1><%- title %></h1>
 <%- messages() %>
+<% if (errors) { %>
+        <ul class="notice">
+            <% errors.array().forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>   
 <form id="login-form" action="/account/login" method="post">
     <div id="inner-form">
         <label>Email<input type="email" name="account_email" required></label>
