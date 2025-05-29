@@ -88,7 +88,7 @@ const validate = {}
  /* ******************************
  * Check data and return errors or continue to registration
  * ***************************** */
-validate.checkRegData = async (req, res, next) =>{
+validate.checkRegData = async (req, res, next) => {
     const { account_firstname, account_lastname, account_email } = req.body
     let errors = []
     errors = validationResult(req)
