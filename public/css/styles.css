@@ -240,17 +240,18 @@ nav li a:hover {
 label {
   font-size: 20px;
 }
-input[type=email], input[type=password], input[type=text] {
+input[type=email], input[type=password], input[type=text], select, textarea, input[type=number] {
   width: 100%;
   margin: 8px 0;
   padding: 12px 20px;
   display: inline-block;
   box-sizing: border-box;
+  font-family: var(--paragraph-font);
 }
 .form-button {
   text-align: center;
 }
-input[type=submit] {
+#loginForm input[type=submit], #register-form input[type=submit] {
   padding-right: 15px;
   padding-left: 15px;
   padding: 10px;
@@ -281,6 +282,7 @@ input[type=submit]:hover {
 }
 #pswdBtn {
   border: solid 2px black;
+  border-radius: 3px;
   padding: 2px;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -297,6 +299,60 @@ input[type=submit]:hover {
 #pwd-info {
   font-size: 11px;
   color: darkslategray;
+}
+#class-form input[type=submit] {
+  padding-right: 15px;
+  padding-left: 15px;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 25px;
+  width: 200px;
+  font-family: var(--paragraph-font);
+}
+#class-form {
+  border-radius: 8px;
+  margin: 10px;
+  max-width: 600px;
+  width: 100%;
+  padding: 8px;
+  background-color: var(--primary-color);
+  font-family: var(--paragraph-font);
+}
+.requirement {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  font-style: italic;
+  font-size: 18px;
+}
+.inv-forms {
+  border: solid 2px white;
+  border-radius: 8px;
+  padding: 8px;
+}
+.inv-info {
+  color: black;
+  font-size: 11px;
+}
+:required:invalid {
+  background-color: rgb(253, 226, 226);
+}
+:required:valid {
+  background-color: rgb(229, 255, 229);
+}
+#management {
+  margin: 8px;
+  font-family: var(--paragraph-font);
+  list-style: none;
+}
+#management li {
+  padding: 10px;
+  font-size: 20px;
+}
+.notice {
+  color: rgb(165, 3, 3);
+  font-size: 18px;
+  font-style: italic;
+  font-family: var(--paragraph-font);
 }
 
 @media screen and (min-width: 600px) {

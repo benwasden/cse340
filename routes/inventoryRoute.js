@@ -18,6 +18,6 @@ router.post("/add-classification", invValidate.classificationRules(), invValidat
 
 // Inventory Management
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
-router.post("/add-inventory", invValidate.inventoryRules(), invValidate.checkClassificationData, utilities.handleErrors(invController.addInventory));
+router.post("/add-inventory", invValidate.inventoryRules(), invValidate.checkInventoryData, utilities.handleErrors(invController.addInventory));
 
 module.exports = router;

@@ -9,7 +9,7 @@
 <% } %>    
 
 <form id="class-form" action="/inv/add-inventory" method="post">
-    <span>All Fields are required</span>
+    <p class="requirement">All Fields are required</p>
     <div class="inv-forms">
         <label>Classification <%- classifications %></label>
         <label>Make<input type="text" name="inv_make" value="<%= locals.inv_make %>" minlength="3" maxlength="40" placeholder="Min of 3 Characters" required></label>
@@ -21,6 +21,6 @@
         <label>Year<input type="number" name="inv_year" value="<%= locals.inv_year %>" min="1900" max="2100" placeholder="4-digit year" required></label>
         <label>Miles<input type="number" name="inv_miles" value="<%= locals.inv_miles %>" placeholder="digits only" required></label>
         <label>Color<input type="text" name="inv_color" value="<%= locals.inv_color %>" required></label>
-         <input type="submit" class="inv-form-button" value="Add Vehicle">
+        <input type="submit" class="inv-form-button" value="Add Vehicle">
     </div>
 </form>
