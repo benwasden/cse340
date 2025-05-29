@@ -59,8 +59,8 @@ invCont.buildAddClassification = async function (req, res, next) {
     title: "Add New Classification",
     nav,
     errors: null,
-  })
-}
+  });
+};
 
 /* ***************************
  *  Add Classification
@@ -74,7 +74,7 @@ invCont.addClassification = async function (req, res, next) {
   if (response) {
     req.flash("notice", `The ${classification_name} classification was successfully added.`);
     res.render("inventory/management", {
-      title: "Vehicle Management",
+      title: "Inventory Management",
       nav,
       classification_name,
       errors: null,
@@ -85,6 +85,51 @@ invCont.addClassification = async function (req, res, next) {
       title: "Add New Classification",
       nav,
       classification_name,
+      errors: null,
+    });
+  }
+};
+
+/* ***************************
+ *  Build Add Inventory View
+ * ************************** */
+invCont.buildAddInventory = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  let classifications = await utilities.buildClassificationList();
+
+  res.render("inventory/add-inventory", {
+    title: "Add Vehicle",
+    nav,
+    classifications,
+    errors: null,
+  });
+};
+
+/* ***************************
+ *  Add Inventory
+ * ************************** */
+invCont.addInventory = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  let classifications = await utilities.buildClassificationList();
+
+  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body;
+
+  const response = invModel.addInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id);
+
+  if (response) {
+    req.flash("notice", `${inv_year} ${inv_make} ${inv_model} was added successfully.`)
+    
+    res.render("inventory/management", {
+      title: "Inventory Management",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", `Failed to add ${inv_year} ${inv_make} ${inv_model}`)
+    res.render("inventory/add-inventory", {
+      title: "Add Vehicle",
+      nav,
+      classifications,
       errors: null,
     });
   }

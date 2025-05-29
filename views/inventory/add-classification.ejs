@@ -11,7 +11,7 @@
 <form id="class-form" action="/inv/add-classification" method="post">
     <span>Field is required</span>
     <div class="inv-forms">
-        <label>Classification Name<span id="pwd-info"><br />NAME MUST BE ALPHABETIC CHARACTERS ONLY</span><input type="text" name="classification_name" required value="<% locals.classification_name %>" pattern="[0-9a-zA-Z]+"></label>
+        <label>Classification Name<span id="pwd-info"><br />NAME MUST BE ALPHABETIC CHARACTERS ONLY</span><input type="text" name="classification_name" required value="<%= locals.classification_name %>" pattern="[0-9a-zA-Z]+"></label>
         <input type="submit" class="inv-form-button" value="Add Classification">
     </div>
 </form>

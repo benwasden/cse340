@@ -16,4 +16,8 @@ router.get("/", utilities.handleErrors(invController.buildManagementView));
 router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
 router.post("/add-classification", invValidate.classificationRules(), invValidate.checkClassificationData, utilities.handleErrors(invController.addClassification));
 
+// Inventory Management
+router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
+router.post("/add-inventory", invValidate.inventoryRules(), invValidate.checkClassificationData, utilities.handleErrors(invController.addInventory));
+
 module.exports = router;
