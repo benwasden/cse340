@@ -8,7 +8,7 @@
     </ul>
 <% } %>    
 
-<form id="class-form" action="/inv/update" method="post">
+<form id="class-form" class="updateForm" action="/inv/update" method="post">
     <p class="requirement">All Fields are required</p>
     <div class="inv-forms">
         <label>Classification <%- classifications %></label>
@@ -21,6 +21,11 @@
         <label>Year<input type="number" name="inv_year" value="<%= locals.inv_year %>" min="1900" max="2100" placeholder="4-digit year" required></label>
         <label>Miles<input type="number" name="inv_miles" value="<%= locals.inv_miles %>" placeholder="digits only" required></label>
         <label>Color<input type="text" name="inv_color" value="<%= locals.inv_color %>" required></label>
-        <input type="submit" name="submit" class="inv-form-button" value="Update Vehicle">
+        <input type="submit" name="submit" id="updateBtn" class="inv-form-button" value="Update Vehicle" disabled>
+        <input type="hidden" name="inv_id"
+        <% if(locals.inv_id) { %> value=" <%= locals.inv_id %>"
+    <% } %>>
     </div>
 </form>
+
+<script src="../../js/inv-update.js"></script>

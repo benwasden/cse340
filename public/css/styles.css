@@ -354,6 +354,9 @@ input[type=submit]:hover {
   font-style: italic;
   font-family: var(--paragraph-font);
 }
+input[type=submit]:hover:disabled {
+  background-color: rgba(165, 0, 0, 0.575);
+}
 
 @media screen and (min-width: 600px) {
   #outer {
