@@ -20,9 +20,15 @@ router.post("/add-classification", invValidate.classificationRules(), invValidat
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
 router.post("/add-inventory", invValidate.inventoryRules(), invValidate.checkInventoryData, utilities.handleErrors(invController.addInventory));
 
+// AJAX Inventory
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 
+// Update Item
 router.get("/edit/:inventory_id", utilities.handleErrors(invController.buildEditInventory));
 router.post("/update/", invValidate.inventoryRules(), invValidate.checkUpdateData, utilities.handleErrors(invController.updateInventory));
+
+// Delete Item
+router.get("/delete/:inventory_id", utilities.handleErrors(invController.buildDeleteInventory));
+router.post("/delete/", utilities.handleErrors(invController.deleteInventory));
 
 module.exports = router;
