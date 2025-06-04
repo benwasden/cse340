@@ -19,11 +19,13 @@
     <input type="hidden" name="old_email" value="<%= locals.account_email %>">
 </form>
 
-<h2>Update Password</h2>
+<h2 id="pwd-update-head">Update Password</h2>
 <form class="password-form" action="/account/update-password" method="post">
     <label>Password<span id="pwd-info"><br>Must be at least 12 characters and contain at least one number, 1 capital letter, and 1 special character</span><input type="password" name="account_password" id="pword" required minlength="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>
     <span id="pswdBtn">Show Password</span>
-    <input type="submit" value="CHANGE PASSWORD">
+    <div class="reg-form-button">
+        <input type="submit" value="CHANGE PASSWORD">
+    </div>
     <input type="hidden" name="account_id" value="<%= locals.account_id %>">
 </form>
 
