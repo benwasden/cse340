@@ -324,14 +324,14 @@ async function registerNewUser(req, res) {
             `Successfully registered ${account_firstname}.`
         )
         res.status(201).render("account/management", {
-            title: "Login",
+            title: "Manage Users",
             nav,
             errors: null,
         })
     } else {
         req.flash("notice", "Sorry, the registration failed.")
         res.status(501).render("account/add-user", {
-            title: "Registration",
+            title: "Add User",
             nav,
             errors: null,
         })

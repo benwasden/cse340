@@ -229,4 +229,27 @@ validate.checkUpdatePasswordData = async (req, res, next) => {
     next()
 }
 
+
+// Week 6 stuff
+validate.checkManageRegData = async (req, res, next) => {
+    const { account_firstname, account_lastname, account_email, account_type } = req.body
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render("account/add-user", {
+            errors,
+            title: "Add User",
+            nav,
+            account_firstname,
+            account_lastname,
+            account_email,
+            account_type,
+        })
+        return
+    }
+    next()
+}
+
+
 module.exports = validate
