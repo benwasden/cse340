@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const accModel = require("../models/account-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -171,6 +172,7 @@ Util.checkAuthorization = (req, res, next) => {
   }
 }
 
+
 /* ****************************************
 * Update Browser Cookie
 **************************************** */
@@ -184,6 +186,56 @@ Util.updateCookie = (accountData, res) => {
       secure: true,
       maxAge: 3600 * 1000,
     });
+  }
+}
+
+
+
+// Week 6 stuff
+
+/* ***************************
+ *  Build User Select List on Form
+ * ************************** */
+Util.buildUserList = async function (account_id = null) {
+  let data = await accModel.getAccounts();
+  let userList = '<select name="account_id" id="accountList" required>';
+  userList += "<option value=''>Choose an Account</option>";
+  data.rows.forEach((row) => {
+    userList += '<option value="' + row.account_id + '"'
+    if ( account_id != null && row.account_id == account_id ) {
+      userList += " selected "
+    }
+    userList += ">" + row.account_firstname + " " + row.account_lastname + ": " + row.account_type + "</option>"
+  })
+  userList += "</select>"
+  return
+}
+
+/* ****************************************
+* Check Admin Authorization Middleware
+**************************************** */
+Util.checkAdminAuthorization = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in")
+          res.clearCookie("jwt")
+          return res.redirect("/account/login")
+        }
+        if (accountData.account_type == "Admin") {
+          next()
+        } else {
+          req.flash("notice", "You do not have permission to access this.")
+          return res.redirect("/account/login")
+        }
+      }
+    )
+  } else {
+    req.flash("notice", "You do not have permission to access this.")
+    return res.redirect("/account/login")
   }
 }
 

@@ -30,4 +30,14 @@ router.post("/update-password", regValidate.updatePasswordRules(), regValidate.c
 
 router.get("/logout", utilities.handleErrors(accountController.accountLogout));
 
+// New Content week 6
+router.get("/management", utilities.checkAdminAuthorization, utilities.handleErrors(accountController.buildUserManageView));
+
+// AJAX Users
+router.get("/getUsers/:account_id", utilities.handleErrors(accountController.getDirectoryJSON));
+
+// User Add
+router.get("/add-user", utilities.handleErrors(accountController.buildAddUser))
+router.post("/add-user", regValidate.registrationRules(), regValidate.checkRegData, utilities.handleErrors(accountController.registerNewUser))
+
 module.exports = router;

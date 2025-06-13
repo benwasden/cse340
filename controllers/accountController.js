@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+const accCont = {};
+
 /* ****************************************
 *  Deliver login view
 * *************************************** */
@@ -235,4 +237,106 @@ async function updatePassword(req, res) {
     }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView, accountLogout, updateAccount, buildUpdate, updatePassword }
+
+
+// Week 6 stuff
+/* ****************************************
+ *  Process password update request
+ * ************************************ */
+async function buildUserManageView(req, res, next) {
+    let nav = await utilities.getNav()
+
+    const userSelect = await utilities.buildUserList();
+
+    res.render("./account/management", {
+        title: "Manage Users",
+        nav,
+        errors: null,
+        userSelect,
+    });
+}
+
+/* ***************************
+ *  Return Users by Account Type As JSON
+ * ************************** */
+accCont.getDirectoryJSON = async (req, res, next) => {
+  const account_id = parseInt(req.params.account_id);
+  const userData = await accountModel.getAccountById(account_id);
+  if (userData[0].account_id) {
+    return res.json(userData);
+  } else {
+    next(new Error("No data returned"));
+  }
+}
+
+// async function getDirectoryJSON (req, res, next) {
+//     const account_id = parseInt(req.params.account_id);
+//     const userData = await accountModel.getAccountById(account_id);
+//     if (userData[0].account_id) {
+//         return res.json(userData);
+//     } else {
+//         next(new Error("No data returned"));
+//     }
+// }
+
+async function buildAddUser (req, res, next) {
+    let nav = await utilities.getNav();
+
+    res.render("account/add-user", {
+        title: "Add New User",
+        nav,
+        errors: null,
+    })
+}
+
+/* ****************************************
+*  Process Added User Registration
+* *************************************** */
+async function registerNewUser(req, res) {
+    let nav = await utilities.getNav()
+    const { account_firstname, account_lastname, account_email, account_password, account_type } = req.body
+
+    // Hash the password before storing
+    let hashedPassword
+    try {
+        // regular password and cost (salt is generated automatically)
+        hashedPassword = await bcrypt.hashSync(account_password, 10)
+    } catch (error) {
+        req.flash("notice", 'Sorry, there was an error processing the registration.')
+        res.status(500).render("account/add-user", {
+            title: "Add New User",
+            nav,
+            errors: null,
+        })
+    }
+
+    const regResult = await accountModel.addUser(
+        account_firstname,
+        account_lastname,
+        account_email,
+        hashedPassword,
+        account_type
+    )
+
+    if (regResult) {
+        req.flash(
+            "notice",
+            `Successfully registered ${account_firstname}.`
+        )
+        res.status(201).render("account/management", {
+            title: "Login",
+            nav,
+            errors: null,
+        })
+    } else {
+        req.flash("notice", "Sorry, the registration failed.")
+        res.status(501).render("account/add-user", {
+            title: "Registration",
+            nav,
+            errors: null,
+        })
+    }
+}
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView, accountLogout, updateAccount, buildUpdate, updatePassword, buildUserManageView, buildAddUser, registerNewUser }

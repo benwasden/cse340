@@ -86,4 +86,26 @@ async function updatePassword(account_id, hashed_password) {
     }
 }
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword }
+
+
+// Week 6 stuff
+/* ***************************
+ *  Get Users for Select on Form
+ * ************************** */
+async function getAccounts() {
+  return await pool.query("SELECT * FROM public.account ORDER BY account_id");
+}
+
+/* ***************************
+ *  Add a User from Manager View
+ * ************************** */
+async function addUser(account_firstname, account_lastname, account_email, account_password, account_type){
+    try {
+        const sql = "INSERT INTO account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, $5) RETURNING *"
+        return await pool.query(sql, [account_firstname, account_lastname, account_email, account_password, account_type])
+    } catch (error) {
+        return error.message
+    }
+}
+
+module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword, getAccounts, addUser }
