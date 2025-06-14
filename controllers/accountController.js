@@ -256,29 +256,6 @@ async function buildUserManageView(req, res, next) {
     });
 }
 
-/* ***************************
- *  Return Users by Account Type As JSON
- * ************************** */
-accCont.getDirectoryJSON = async (req, res, next) => {
-  const account_id = parseInt(req.params.account_id);
-  const userData = await accountModel.getAccountById(account_id);
-  if (userData[0].account_id) {
-    return res.json(userData);
-  } else {
-    next(new Error("No data returned"));
-  }
-}
-
-// async function getDirectoryJSON (req, res, next) {
-//     const account_id = parseInt(req.params.account_id);
-//     const userData = await accountModel.getAccountById(account_id);
-//     if (userData[0].account_id) {
-//         return res.json(userData);
-//     } else {
-//         next(new Error("No data returned"));
-//     }
-// }
-
 async function buildAddUser (req, res, next) {
     let nav = await utilities.getNav();
 
@@ -323,10 +300,12 @@ async function registerNewUser(req, res) {
             "notice",
             `Successfully registered ${account_firstname}.`
         )
+        const userSelect = await utilities.buildUserList();
         res.status(201).render("account/management", {
             title: "Manage Users",
             nav,
             errors: null,
+            userSelect,
         })
     } else {
         req.flash("notice", "Sorry, the registration failed.")
@@ -338,5 +317,69 @@ async function registerNewUser(req, res) {
     }
 }
 
+/* ***************************
+ *  Return Account As JSON
+ * ************************** */
+accCont.getAccountJSON = async (req, res, next) => {
+    const account_id = parseInt(req.params.account_id);
+    const accData = await accountModel.getAccountById(account_id);
+    if (accData[0].account_id) {
+        return res.json(accData)
+    } else {
+        next(new Error("No Data Returned"))
+    }
+}
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView, accountLogout, updateAccount, buildUpdate, updatePassword, buildUserManageView, buildAddUser, registerNewUser }
+/* ***************************
+ *  Build Delete Account View
+ * ************************** */
+async function buildDeleteUser (req, res, next) {
+  const account_id = parseInt(req.params.account_id);
+  let nav = await utilities.getNav();
+  const userData = (await accountModel.getAccountById(account_id));
+  const userName = `${userData.account_firstname} ${userData.account_lastname}`;
+
+  res.render("./account/delete-confirm", {
+    title: "Delete " + userName,
+    nav,
+    errors: null,
+    account_id: userData.account_id,
+    account_firstname: userData.account_firstname,
+    account_lastname: userData.account_lastname,
+    account_email: userData.account_email,
+    account_type: userData.account_type,
+  });
+};
+
+/* ***************************
+ *  Delete Inventory Item
+ * ************************** */
+async function deleteUser (req, res, next) {
+  const nav = await utilities.getNav();
+
+  const {account_id, account_firstname, account_lastname, account_email, account_type} = req.body;
+
+  const response = await accountModel.deleteAccount(account_id);
+
+  const userName = `${account_firstname} ${account_lastname}`
+
+  if (response) {
+    req.flash("notice", `${userName} deleted successfully.`);
+    res.redirect("/account/");
+  } else {
+    req.flash("notice", "Sorry, the delete failed.");
+    res.status(501).render("account/management/delete-confirm", {
+      title: "Delete " + userName,
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_type,
+    });
+  }
+};
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView, accountLogout, updateAccount, buildUpdate, updatePassword, buildUserManageView, buildAddUser, registerNewUser, buildDeleteUser, deleteUser }

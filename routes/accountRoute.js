@@ -33,11 +33,15 @@ router.get("/logout", utilities.handleErrors(accountController.accountLogout));
 // New Content week 6
 router.get("/management", utilities.checkAdminAuthorization, utilities.handleErrors(accountController.buildUserManageView));
 
-// AJAX Users
-router.get("/getUsers/:account_id", utilities.handleErrors(accountController.getDirectoryJSON));
-
 // User Add
-router.get("/add-user", utilities.handleErrors(accountController.buildAddUser))
+router.get("/add-user", utilities.checkAdminAuthorization, utilities.handleErrors(accountController.buildAddUser))
 router.post("/add-user", regValidate.registrationRules(), regValidate.checkRegData, utilities.handleErrors(accountController.registerNewUser))
+
+// AJAX User
+router.get("/management/getUsers:account_id", utilities.handleErrors(accountController.getUsersJSON))
+
+// Delete Item
+router.get("/management/delete/:account_id", utilities.checkAdminAuthorization, utilities.handleErrors(accountController.buildDeleteUser));
+router.post("/delete-user/", utilities.handleErrors(accountController.deleteUser));
 
 module.exports = router;

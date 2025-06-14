@@ -93,7 +93,16 @@ async function updatePassword(account_id, hashed_password) {
  *  Get Users for Select on Form
  * ************************** */
 async function getAccounts() {
-  return await pool.query("SELECT * FROM public.account ORDER BY account_id");
+  return await pool.query('SELECT * FROM public.account ORDER BY account_id');
+}
+
+/* ***************************
+ *  Get Users for Select on Form
+ * ************************** */
+async function getAccountByType(account_type) {
+    const sql = "SELECT * FROM public.account WHERE account_type = $1";
+    const result = await pool.query(sql, [account_type]);
+    return result
 }
 
 /* ***************************
@@ -108,4 +117,17 @@ async function addUser(account_firstname, account_lastname, account_email, accou
     }
 }
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword, getAccounts, addUser }
+/* ***************************
+ *  Delete Account
+ * ************************** */
+async function deleteAccount(account_id) {
+  try {
+    const sql = 'DELETE FROM account WHERE account_id = $1';
+    const data = await pool.query(sql, [account_id]);
+    return data;
+  } catch (error) {
+    new Error("Delete User Error");
+  }
+};
+
+module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword, getAccountByType, addUser, getAccounts, deleteAccount }

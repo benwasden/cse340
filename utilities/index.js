@@ -193,24 +193,6 @@ Util.updateCookie = (accountData, res) => {
 
 // Week 6 stuff
 
-/* ***************************
- *  Build User Select List on Form
- * ************************** */
-Util.buildUserList = async function (account_id = null) {
-  let data = await accModel.getAccounts();
-  let userList = '<select name="account_id" id="accountList" required>';
-  userList += "<option value=''>Choose an Account</option>";
-  data.rows.forEach((row) => {
-    userList += '<option value="' + row.account_id + '"'
-    if ( account_id != null && row.account_id == account_id ) {
-      userList += " selected "
-    }
-    userList += ">" + row.account_firstname + " " + row.account_lastname + ": " + row.account_type + "</option>"
-  })
-  userList += "</select>"
-  return
-}
-
 /* ****************************************
 * Check Admin Authorization Middleware
 **************************************** */
@@ -237,6 +219,41 @@ Util.checkAdminAuthorization = (req, res, next) => {
     req.flash("notice", "You do not have permission to access this.")
     return res.redirect("/account/login")
   }
+}
+
+/* ***************************
+ *  Build User Select List on Form
+ * ************************** */
+Util.buildUserList = async function (account_id = null) {
+    let data = await accModel.getAccounts()
+    // let accountList =
+    //   '<select name="account_id" id="accountList" required>'
+    // accountList += "<option value=''>Choose an Account</option>"
+    // data.rows.forEach((row) => {
+    //   accountList += '<option value="' + row.account_id + '"'
+    //   if ( account_id != null && row.account_id == account_id
+    //   ) {
+    //     accountList += " selected "
+    //   }
+    //   accountList += ">" + row.account_firstname + " " + row.account_lastname + " - " + row.account_type + " " + "</option>"
+    // })
+    // accountList += "</select>"
+    // return accountList
+
+    let dataTable = '<table id="inventoryDisplay">'
+    dataTable += '<thead>'; 
+    dataTable += '<tr><th>Account Name</th><th>Type</th><td>&nbsp;</td><td>&nbsp;</td></tr>'; 
+    dataTable += '</thead>';
+    dataTable += '<tbody>';
+    data.rows.forEach((row) => {  
+      dataTable += `<tr><td>${row.account_firstname} ${row.account_lastname}</td>`;
+      dataTable += `<td>${row.account_type}</td>` 
+      dataTable += `<td><a href='/account/management/edit/${row.account_id}' title='Click to update'>Modify</a></td>`; 
+      dataTable += `<td><a href='/account/management/delete/${row.account_id}' title='Click to delete'>Delete</a></td></tr>`; 
+    })
+    dataTable += '</tbody>'; 
+    dataTable +='</table>'
+    return dataTable
 }
 
 /* ****************************************
