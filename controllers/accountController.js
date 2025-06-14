@@ -352,7 +352,7 @@ async function buildDeleteUser (req, res, next) {
 };
 
 /* ***************************
- *  Delete Inventory Item
+ *  Delete User
  * ************************** */
 async function deleteUser (req, res, next) {
   const nav = await utilities.getNav();
@@ -381,5 +381,55 @@ async function deleteUser (req, res, next) {
   }
 };
 
+/* ***************************
+ *  Build Edit User View
+ * ************************** */
+async function buildEditUser (req, res, next) {
+  const account_id = parseInt(req.params.account_id);
+  let nav = await utilities.getNav();
+  const userData = (await accountModel.getAccountById(account_id))
+  // const classificationSelect = await utilities.buildClassificationList(itemData.classification_id); // Included lesson code, doesn't work
+  const userName = `${userData.account_firstname} ${userData.account_lastname}`;
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView, accountLogout, updateAccount, buildUpdate, updatePassword, buildUserManageView, buildAddUser, registerNewUser, buildDeleteUser, deleteUser }
+  res.render("./account/edit-user", {
+    title: "Edit " + userName,
+    nav,
+    errors: null,
+    account_id: userData.account_id,
+    account_firstname: userData.account_firstname,
+    account_lastname: userData.account_lastname,
+    account_email: userData.account_email,
+  });
+};
+
+/* ****************************************
+ *  Process account update request from manager
+ * ************************************ */
+async function updateUserAccount(req, res) {
+    let nav = await utilities.getNav();
+    const { account_id, account_firstname, account_lastname, account_email, account_type } = req.body;
+    const regResult = await accountModel.updateUserAccount(account_id, account_firstname, account_lastname, account_email, account_type);
+    if (regResult) {
+        req.flash("notice", `Successfully updated ${account_firstname}'s account.`)
+
+        res.status(201).render("account/account-management", {
+            title: "Management",
+            nav,
+            errors: null,
+        });
+    } else {
+        req.flash("notice", "Sorry, the update failed")
+        res.status(501).render("account/edit-user", {
+            title: "Update",
+            nav,
+            errors: null,
+            account_id,
+            account_firstname,
+            account_lastname,
+            account_email,
+        });
+    }
+};
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView, accountLogout, updateAccount, buildUpdate, updatePassword, buildUserManageView, buildAddUser, registerNewUser, buildDeleteUser, deleteUser, buildEditUser, updateUserAccount }

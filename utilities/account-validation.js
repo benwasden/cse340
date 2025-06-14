@@ -251,5 +251,28 @@ validate.checkManageRegData = async (req, res, next) => {
     next()
 }
 
+ /* ******************************
+ * Check data and return errors or continue to update
+ * ***************************** */
+validate.checkUpdateDataManage =  async (req, res, next) => {
+    const { account_id, account_firstname, account_lastname, account_email } = req.body
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render("account/edit-user", {
+            errors,
+            title: "Edit" + account_firstname + " " + account_lastname,
+            nav,
+            account_id,
+            account_firstname,
+            account_lastname,
+            account_email,
+        })
+        return
+    }
+    next()
+}
+
 
 module.exports = validate

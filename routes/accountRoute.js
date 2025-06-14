@@ -30,6 +30,8 @@ router.post("/update-password", regValidate.updatePasswordRules(), regValidate.c
 
 router.get("/logout", utilities.handleErrors(accountController.accountLogout));
 
+
+
 // New Content week 6
 router.get("/management", utilities.checkAdminAuthorization, utilities.handleErrors(accountController.buildUserManageView));
 
@@ -39,6 +41,11 @@ router.post("/add-user", regValidate.registrationRules(), regValidate.checkRegDa
 
 // AJAX User
 router.get("/management/getUsers:account_id", utilities.handleErrors(accountController.getUsersJSON))
+
+// Update Item
+router.get("/management/edit/:account_id", utilities.checkAdminAuthorization, utilities.handleErrors(accountController.buildEditUser));
+router.post("/edit-user", regValidate.updateRules(), regValidate.checkUpdateDataManage, utilities.handleErrors(accountController.updateUserAccount));
+
 
 // Delete Item
 router.get("/management/delete/:account_id", utilities.checkAdminAuthorization, utilities.handleErrors(accountController.buildDeleteUser));

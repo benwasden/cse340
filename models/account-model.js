@@ -88,7 +88,10 @@ async function updatePassword(account_id, hashed_password) {
 
 
 
+
+
 // Week 6 stuff
+
 /* ***************************
  *  Get Users for Select on Form
  * ************************** */
@@ -130,4 +133,17 @@ async function deleteAccount(account_id) {
   }
 };
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword, getAccountByType, addUser, getAccounts, deleteAccount }
+/* *****************************
+* Send query to update account from manager
+* ***************************** */
+async function updateUserAccount(account_id, account_firstname, account_lastname, account_email, account_type) {
+    try {
+        const sql = "UPDATE account SET account_firstname = $1, account_lastname = $2, account_email = $3, account_type = $4 WHERE account_id = $5";
+        const result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_type, account_id]);
+        return result;
+    } catch(error) {
+        return new Error("Update failed. Please try again.");
+    }
+}
+
+module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword, getAccountByType, addUser, getAccounts, deleteAccount, updateUserAccount }
